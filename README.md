@@ -16,12 +16,29 @@ It's not something that in it's current state is ready for production, but is mo
 The project will include Authentication,Email service for receiving registration confirm, order confirmation etc, signalR for live data updates.
 For payment both Stripe and swedish Swish system will be introduced, though no reall money will be involved for the payments.
 
+## Todo
+
+ - Basic Authentication &#x2611;
+ - Basic Email &#x2611;
+ - Ordering Service &#x2610;
+ - Adding Carrier Options &#x2610;
+ - Adding Checkout Options &#x2610;
+
+
 
 ## Setup
 #### Sql Server:
 
 Make sure you've Sql server installed on your platform. It can be found here: [Microsoft Sql Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 A nice addition would be SQL Server Management Studio(SSMS), it can be found here: [SSMS](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
+
+#### EmailService:
+For the currenct state of the project I'm using Azure Key Vault to store my SendGrid and from where the email is sent. If you want to use that service you need to change that. It includes those classes in the project: 
+
+- EmailRegistrationSuccessfullConsumer
+- AzureKeyVault
+- ServiceExtensions
+- SendGridEmailRegisterService
 
 
 #### Visual Studio:

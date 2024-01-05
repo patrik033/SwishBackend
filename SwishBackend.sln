@@ -1,0 +1,89 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{62EA31BD-D75D-4AED-AFE2-101BF6974B93}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Email", "Email", "{9AE95E57-1331-44BB-A760-796D401CEEA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{3F511C68-8EA4-496C-966F-4E958C32FDA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{BA68FB21-AEB7-4C4C-8FAD-4B7F3D012E03}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{A38D3571-F606-497F-BD8F-142C550BC08B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SignalR", "SignalR", "{AC079967-8041-4B39-9AF1-F934D4AEE50C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoreItems", "StoreItems", "{DD5FC609-EAAC-45CD-8E10-6259188C5413}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.StoreItems", "SwishBackend.StoreItems\SwishBackend.StoreItems.csproj", "{93FAEF97-1321-40F7-9A1B-1198EEEE2133}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.SignalR", "SwishBackend.SignalR\SwishBackend.SignalR.csproj", "{CBD11F42-12A2-4CE4-BC13-6F93D3186D4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.Orders", "SwishBackend.Orders\SwishBackend.Orders.csproj", "{48FD2D13-1B05-4A11-9127-B38BDBC31DB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.Identity", "SwishBackend.Identity\SwishBackend.Identity.csproj", "{C9A34BCC-4AE5-469A-82DA-37AA969C20A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.Gateway", "SwishBackend.Gateway\SwishBackend.Gateway.csproj", "{C39438E6-A41A-414B-AD90-E8EB98D1B0D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.Email", "SwishBackend.Email\SwishBackend.Email.csproj", "{94F94D55-8F9F-4736-88C7-ABE878581595}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MassTransitCommon", "MassTransitCommon", "{BDEB38B7-2C4A-4BA5-9B77-69D9656B9250}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.MassTransitCommons", "SwishBackend.MassTransitCommons\SwishBackend.MassTransitCommons.csproj", "{7DE8CC86-34A0-4522-A08F-1675340DD4CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93FAEF97-1321-40F7-9A1B-1198EEEE2133}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93FAEF97-1321-40F7-9A1B-1198EEEE2133}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93FAEF97-1321-40F7-9A1B-1198EEEE2133}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93FAEF97-1321-40F7-9A1B-1198EEEE2133}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBD11F42-12A2-4CE4-BC13-6F93D3186D4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBD11F42-12A2-4CE4-BC13-6F93D3186D4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBD11F42-12A2-4CE4-BC13-6F93D3186D4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBD11F42-12A2-4CE4-BC13-6F93D3186D4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48FD2D13-1B05-4A11-9127-B38BDBC31DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48FD2D13-1B05-4A11-9127-B38BDBC31DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48FD2D13-1B05-4A11-9127-B38BDBC31DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48FD2D13-1B05-4A11-9127-B38BDBC31DB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9A34BCC-4AE5-469A-82DA-37AA969C20A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9A34BCC-4AE5-469A-82DA-37AA969C20A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9A34BCC-4AE5-469A-82DA-37AA969C20A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9A34BCC-4AE5-469A-82DA-37AA969C20A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C39438E6-A41A-414B-AD90-E8EB98D1B0D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C39438E6-A41A-414B-AD90-E8EB98D1B0D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C39438E6-A41A-414B-AD90-E8EB98D1B0D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C39438E6-A41A-414B-AD90-E8EB98D1B0D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94F94D55-8F9F-4736-88C7-ABE878581595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94F94D55-8F9F-4736-88C7-ABE878581595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94F94D55-8F9F-4736-88C7-ABE878581595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94F94D55-8F9F-4736-88C7-ABE878581595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DE8CC86-34A0-4522-A08F-1675340DD4CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DE8CC86-34A0-4522-A08F-1675340DD4CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DE8CC86-34A0-4522-A08F-1675340DD4CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DE8CC86-34A0-4522-A08F-1675340DD4CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{93FAEF97-1321-40F7-9A1B-1198EEEE2133} = {DD5FC609-EAAC-45CD-8E10-6259188C5413}
+		{CBD11F42-12A2-4CE4-BC13-6F93D3186D4F} = {AC079967-8041-4B39-9AF1-F934D4AEE50C}
+		{48FD2D13-1B05-4A11-9127-B38BDBC31DB8} = {A38D3571-F606-497F-BD8F-142C550BC08B}
+		{C9A34BCC-4AE5-469A-82DA-37AA969C20A5} = {BA68FB21-AEB7-4C4C-8FAD-4B7F3D012E03}
+		{C39438E6-A41A-414B-AD90-E8EB98D1B0D8} = {3F511C68-8EA4-496C-966F-4E958C32FDA9}
+		{94F94D55-8F9F-4736-88C7-ABE878581595} = {9AE95E57-1331-44BB-A760-796D401CEEA6}
+		{7DE8CC86-34A0-4522-A08F-1675340DD4CF} = {BDEB38B7-2C4A-4BA5-9B77-69D9656B9250}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D6E31C0-DC0A-4618-9906-FDD1B4680CE8}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <UserSecretsId>6e0e9987-b736-4571-b73d-f7aabcd9c5f4</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+	  <PackageReference Include="FluentValidation" Version="11.8.1" />
+	  <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+	  <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
+	  <PackageReference Include="MassTransit" Version="8.1.2" />
+	  <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+	  <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.2" />
+	  <PackageReference Include="MediatR" Version="12.2.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.0.3" />
+	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+	  <PackageReference Include="SendGrid" Version="9.28.1" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+	  <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+    <Folder Include="Models\Validation\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SwishBackend.MassTransitCommons\SwishBackend.MassTransitCommons.csproj" />
+  </ItemGroup>
+
+</Project>

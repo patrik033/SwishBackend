@@ -1,0 +1,6 @@
+@SwishBackend.SignalR_HostAddress = http://localhost:5000
+
+GET {{SwishBackend.SignalR_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

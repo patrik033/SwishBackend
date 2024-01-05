@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <UserSecretsId>25bf7e77-84b5-435f-816b-21e5ab62bc2b</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Azure.Identity" Version="1.10.4" />
+	  <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.5.0" />
+	  <PackageReference Include="MassTransit" Version="8.1.2" />
+	  <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+	  <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.2" />
+	  <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.5" />
+	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+	  <PackageReference Include="SendGrid" Version="9.28.1" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SwishBackend.MassTransitCommons\SwishBackend.MassTransitCommons.csproj" />
+  </ItemGroup>
+
+</Project>

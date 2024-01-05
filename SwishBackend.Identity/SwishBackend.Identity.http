@@ -1,0 +1,6 @@
+@SwishBackend.Identity_HostAddress = http://localhost:5001
+
+GET {{SwishBackend.Identity_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

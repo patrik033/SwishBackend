@@ -11,7 +11,10 @@
 
 
 ## General Info
-This Project is...
+This Project is my implementation of an e-commerce platform built with C#/.NET as backend and React as the frontend language with a microservice perspective taken in mind. 
+It's not something that in it's current state is ready for production, but is more my learning platform for setting up a microservice application.
+The project will include Authentication,Email service for receiving registration confirm, order confirmation etc, signalR for live data updates.
+For payment both Stripe and swedish Swish system will be introduced, though no reall money will be involved for the payments.
 
 
 ## Setup
@@ -28,7 +31,7 @@ To run the project you need an IDE, like Visual Studio Community: [Visual Studio
 #### Update The Database:
 
 To update the database simply use the Package Manager Console that comes integrated with visual studio community and simply write "Update-Database"
-Make sure you are in the correct project when doing so. As of now only Identity and StoreItems offers this.
+Make sure you are in the correct project when doing so. As of now only Identity, StoreItems and Orders projects offers this.
 
 #### Make sure RabbitMQ is running:
 Either: run this command in the terminal to start rabbitMQ:  docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management

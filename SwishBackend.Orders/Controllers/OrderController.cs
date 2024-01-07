@@ -10,14 +10,14 @@ namespace SwishBackend.Orders.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CartController : ControllerBase
+    public class OrderController : ControllerBase
     {
 
         private readonly IRequestClient<UserLookupMessage> _userClient;
         private readonly IRequestClient<ProductLookupMessage> _productClient;
         private readonly OrdersDbContext _ordersDbContext;
         private readonly IPublishEndpoint _publishEndpoint;
-        public CartController(IPublishEndpoint publishEndpoint, IRequestClient<UserLookupMessage> userClient, IRequestClient<ProductLookupMessage> productClient, OrdersDbContext ordersDbContext)
+        public OrderController(IPublishEndpoint publishEndpoint, IRequestClient<UserLookupMessage> userClient, IRequestClient<ProductLookupMessage> productClient, OrdersDbContext ordersDbContext)
         {
             _publishEndpoint = publishEndpoint;
             _userClient = userClient;
@@ -119,13 +119,20 @@ namespace SwishBackend.Orders.Controllers
                     .ShoppingCartOrders
                     .Include(o => o.ShoppingCartItems)
                     .Where(o => o.UserId == userId && !o.HasBeenCheckedOut)
-                    .FirstOrDefaultAsync();
-
-                var existingItem = existingOrder?
-                    .ShoppingCartItems
-                    .ToList();
-
-
+                    .Select(o => new
+                    {
+                        TotalAmount = o.TotalPrice,
+                        TotalCount = o.TotalCount,
+                        ShoppingCartItems = o.ShoppingCartItems.Select(item => new
+                        {
+                            Name = item.Name,
+                            Price = item.Price,
+                            Quantity = item.OrderedQuantity,
+                            Category = item.ProductCategoryId,
+                            CategoryName = item.CategoryName,
+                          
+                        })
+                    }).FirstOrDefaultAsync();
 
                 if (existingOrder != null)
                 {

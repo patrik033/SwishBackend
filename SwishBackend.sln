@@ -20,21 +20,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SignalR", "SignalR", "{AC07
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoreItems", "StoreItems", "{DD5FC609-EAAC-45CD-8E10-6259188C5413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.StoreItems", "SwishBackend.StoreItems\SwishBackend.StoreItems.csproj", "{93FAEF97-1321-40F7-9A1B-1198EEEE2133}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwishBackend.StoreItems", "SwishBackend.StoreItems\SwishBackend.StoreItems.csproj", "{93FAEF97-1321-40F7-9A1B-1198EEEE2133}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.SignalR", "SwishBackend.SignalR\SwishBackend.SignalR.csproj", "{CBD11F42-12A2-4CE4-BC13-6F93D3186D4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwishBackend.SignalR", "SwishBackend.SignalR\SwishBackend.SignalR.csproj", "{CBD11F42-12A2-4CE4-BC13-6F93D3186D4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.Orders", "SwishBackend.Orders\SwishBackend.Orders.csproj", "{48FD2D13-1B05-4A11-9127-B38BDBC31DB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwishBackend.Orders", "SwishBackend.Orders\SwishBackend.Orders.csproj", "{48FD2D13-1B05-4A11-9127-B38BDBC31DB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.Identity", "SwishBackend.Identity\SwishBackend.Identity.csproj", "{C9A34BCC-4AE5-469A-82DA-37AA969C20A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwishBackend.Identity", "SwishBackend.Identity\SwishBackend.Identity.csproj", "{C9A34BCC-4AE5-469A-82DA-37AA969C20A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.Gateway", "SwishBackend.Gateway\SwishBackend.Gateway.csproj", "{C39438E6-A41A-414B-AD90-E8EB98D1B0D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwishBackend.Gateway", "SwishBackend.Gateway\SwishBackend.Gateway.csproj", "{C39438E6-A41A-414B-AD90-E8EB98D1B0D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.Email", "SwishBackend.Email\SwishBackend.Email.csproj", "{94F94D55-8F9F-4736-88C7-ABE878581595}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwishBackend.Email", "SwishBackend.Email\SwishBackend.Email.csproj", "{94F94D55-8F9F-4736-88C7-ABE878581595}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MassTransitCommon", "MassTransitCommon", "{BDEB38B7-2C4A-4BA5-9B77-69D9656B9250}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.MassTransitCommons", "SwishBackend.MassTransitCommons\SwishBackend.MassTransitCommons.csproj", "{7DE8CC86-34A0-4522-A08F-1675340DD4CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwishBackend.MassTransitCommons", "SwishBackend.MassTransitCommons\SwishBackend.MassTransitCommons.csproj", "{7DE8CC86-34A0-4522-A08F-1675340DD4CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payments", "Payments", "{7D372336-9621-4D69-853B-FD78C0A25E94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.Payments", "SwishBackend.Payments\SwishBackend.Payments.csproj", "{15B200C2-713B-49F1-BDEE-C4147F7C70FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Carriers", "Carriers", "{1C03E4D4-0FB0-4A34-BDB0-46EF93523536}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwishBackend.Carriers", "SwishBackend.Carriers\SwishBackend.Carriers.csproj", "{E6B2056C-58D7-43E0-B86A-9415D2D46DFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +78,14 @@ Global
 		{7DE8CC86-34A0-4522-A08F-1675340DD4CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DE8CC86-34A0-4522-A08F-1675340DD4CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DE8CC86-34A0-4522-A08F-1675340DD4CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15B200C2-713B-49F1-BDEE-C4147F7C70FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B200C2-713B-49F1-BDEE-C4147F7C70FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B200C2-713B-49F1-BDEE-C4147F7C70FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B200C2-713B-49F1-BDEE-C4147F7C70FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6B2056C-58D7-43E0-B86A-9415D2D46DFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6B2056C-58D7-43E0-B86A-9415D2D46DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6B2056C-58D7-43E0-B86A-9415D2D46DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6B2056C-58D7-43E0-B86A-9415D2D46DFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +98,8 @@ Global
 		{C39438E6-A41A-414B-AD90-E8EB98D1B0D8} = {3F511C68-8EA4-496C-966F-4E958C32FDA9}
 		{94F94D55-8F9F-4736-88C7-ABE878581595} = {9AE95E57-1331-44BB-A760-796D401CEEA6}
 		{7DE8CC86-34A0-4522-A08F-1675340DD4CF} = {BDEB38B7-2C4A-4BA5-9B77-69D9656B9250}
+		{15B200C2-713B-49F1-BDEE-C4147F7C70FE} = {7D372336-9621-4D69-853B-FD78C0A25E94}
+		{E6B2056C-58D7-43E0-B86A-9415D2D46DFD} = {1C03E4D4-0FB0-4A34-BDB0-46EF93523536}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D6E31C0-DC0A-4618-9906-FDD1B4680CE8}

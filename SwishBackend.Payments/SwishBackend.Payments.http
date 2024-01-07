@@ -1,0 +1,6 @@
+@SwishBackend.Payments_HostAddress = http://localhost:5202
+
+GET {{SwishBackend.Payments_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

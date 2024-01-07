@@ -11,10 +11,12 @@
 
 
 ## General Info
-This Project is my implementation of an e-commerce platform built with C#/.NET as backend and React as the frontend language with a microservice perspective taken in mind. 
+This Project is my implementation of an e-commerce platform built with C#/.NET as backend with a microservice perspective taken in mind. 
 It's not something that in it's current state is ready for production, but is more my learning platform for setting up a microservice application.
 The project will include Authentication,Email service for receiving registration confirm, order confirmation etc, signalR for live data updates.
 For payment both Stripe and swedish Swish system will be introduced, though no reall money will be involved for the payments.
+
+The project consist of two project, first this as the backend then the frontend part. See [Frontend](https://github.com/patrik033/SwishFront)
 
 ## Todo
 

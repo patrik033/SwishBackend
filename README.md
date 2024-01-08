@@ -22,6 +22,7 @@ The project consist of two project, first this as the backend then the frontend 
 
  - Basic Authentication &#x2611;
  - Basic Email &#x2611;
+ - Setting up the Gateway &#x2610;
  - Ordering Service &#x2610;
  - Adding Carrier Options &#x2610;
  - Adding Checkout Options &#x2610;

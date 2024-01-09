@@ -21,7 +21,9 @@ The project consist of two project, first this as the backend then the frontend 
 ## Todo
 
  - Basic Authentication &#x2611;
+   - Change to http only cookie &#x2610;
  - Basic Email &#x2611;
+   - Add more endpoints except when user registers and request a new activation email &#x2610;
  - Setting up the Gateway &#x2610;
  - Ordering Service &#x2610;
  - Adding Carrier Options &#x2610;

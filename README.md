@@ -26,6 +26,7 @@ The project consist of two project, first this as the backend then the frontend 
    - Add more endpoints except when user registers and request a new activation email &#x2610;
  - Setting up the Gateway &#x2610;
  - Ordering Service &#x2610;
+   - Added basic stripe interragation(will be moved to payment API later) &#x2611;  
  - Adding Carrier Options &#x2610;
  - Adding Checkout Options &#x2610;
 

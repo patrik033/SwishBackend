@@ -1,8 +1,10 @@
 using MassTransit;
 using MassTransitCommons.Common.Order;
 using Microsoft.EntityFrameworkCore;
-
+using SwishBackend.Orders;
 using SwishBackend.Orders.Data;
+using SwishBackend.Orders.Extensions;
+using SwishBackend.Orders.Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +14,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IStripeService, StripeService>();
+await builder.Services.ConfigureAzure(builder.Configuration);
 
-
-
-    builder.Services.AddCors(options =>
+builder.Services.AddCors(options =>
     {
         options.AddDefaultPolicy(builder =>
         {
@@ -36,6 +38,7 @@ builder.Services.AddDbContext<OrdersDbContext>(options =>
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumersFromNamespaceContaining<OrderNotify>();
+
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("order", false));
 
 
@@ -73,5 +76,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+SeedData.EnsureDataIsSeeded(app);
 app.Run();

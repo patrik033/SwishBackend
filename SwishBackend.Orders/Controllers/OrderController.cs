@@ -25,36 +25,57 @@ namespace SwishBackend.Orders.Controllers
             _ordersDbContext = ordersDbContext;
         }
 
-
         [HttpDelete("{userName}/{productId}")]
         public async Task<IActionResult> RemoveItem(string userName, Guid productId)
         {
             var user = await _userClient
-                .GetResponse<UserLookupResponse>(new UserLookupMessage { UserName = userName });
+                .GetResponse<UserLookupResponse>
+                (new UserLookupMessage { UserName = userName });
 
             var product = await _productClient
-                .GetResponse<ProductResponseMessage>(new ProductLookupMessage { ProductId = productId });
+                .GetResponse<ProductResponseMessage>
+                (new ProductLookupMessage { ProductId = productId });
 
             var userId = user.Message.UserId;
-            var existingOrder = await _ordersDbContext.ShoppingCartOrders
+            var existingOrder = await _ordersDbContext
+                  .ShoppingCartOrders
                   .Include(o => o.ShoppingCartItems)
                   .Where(o => o.UserId == userId && !o.HasBeenCheckedOut)
                   .FirstOrDefaultAsync();
 
-            var item = existingOrder.ShoppingCartItems.FirstOrDefault(x => x.ProductCategoryId == productId);
+            var item = existingOrder.ShoppingCartItems
+                .FirstOrDefault(x => x.ProductCategoryId == productId);
+            
             if (item != null)
             {
-                _ordersDbContext.ShoppingCartItems.Remove(item);
-                await _ordersDbContext.SaveChangesAsync();
-
-                existingOrder.TotalPrice = existingOrder.ShoppingCartItems
-                       .Sum(item => item.OrderedQuantity * item.Price);
-
-                existingOrder.TotalCount = existingOrder.ShoppingCartItems
-                       .Sum(item => item.OrderedQuantity);
+                _ordersDbContext
+                    .ShoppingCartItems
+                    .Remove(item);
 
                 await _ordersDbContext
                     .SaveChangesAsync();
+
+                //updating orders totalprice and count after update
+                CalculateTotalPrice(existingOrder);
+                CalculateTotalCount(existingOrder);
+
+                await _ordersDbContext
+                    .SaveChangesAsync();
+
+
+                var orderCount = await _ordersDbContext
+                  .ShoppingCartOrders
+                  .Where(o => o.UserId == userId && !o.HasBeenCheckedOut)
+                  .FirstOrDefaultAsync();
+
+                var notify = new OrderNotify
+                {
+                    Count = orderCount.TotalCount,
+                    Email = orderCount.Email,
+                    UserId = orderCount.UserId,
+                };
+
+                await _publishEndpoint.Publish(notify);
 
                 return Ok();
             }
@@ -65,10 +86,13 @@ namespace SwishBackend.Orders.Controllers
         public async Task<IActionResult> DecreaseItem(string userName, Guid productId)
         {
             var user = await _userClient
-                .GetResponse<UserLookupResponse>(new UserLookupMessage { UserName = userName });
+                .GetResponse<UserLookupResponse>
+                (new UserLookupMessage { UserName = userName });
 
             var product = await _productClient
-                .GetResponse<ProductResponseMessage>(new ProductLookupMessage { ProductId = productId });
+                .GetResponse<ProductResponseMessage>
+                (new ProductLookupMessage { ProductId = productId });
+
 
             var userId = user.Message.UserId;
             var existingOrder = await _ordersDbContext
@@ -82,22 +106,36 @@ namespace SwishBackend.Orders.Controllers
                 .FirstOrDefault(x => x.ProductCategoryId == productId);
 
 
-            if (item.OrderedQuantity - 1 > 0)
+
+            if (item.OrderedQuantity - 1 >= 0)
             {
                 item.OrderedQuantity -= 1;
-                _ordersDbContext.ShoppingCartItems.Update(item);
-                await _ordersDbContext.SaveChangesAsync();
-
-                existingOrder.TotalPrice = existingOrder
-                    .ShoppingCartItems
-                    .Sum(item => item.OrderedQuantity * item.Price);
-
-                existingOrder.TotalCount = existingOrder
-                    .ShoppingCartItems
-                    .Sum(item => item.OrderedQuantity);
+                _ordersDbContext.ShoppingCartItems
+                    .Update(item);
 
                 await _ordersDbContext
                     .SaveChangesAsync();
+                //updating orders totalprice and count after update
+                CalculateTotalPrice(existingOrder);
+                CalculateTotalCount(existingOrder);
+
+                await _ordersDbContext
+                    .SaveChangesAsync();
+
+
+                var orderCount = await _ordersDbContext
+                  .ShoppingCartOrders
+                  .Where(o => o.UserId == userId && !o.HasBeenCheckedOut)
+                  .FirstOrDefaultAsync();
+
+                var notify = new OrderNotify
+                {
+                    Count = orderCount.TotalCount,
+                    Email = orderCount.Email,
+                    UserId = orderCount.UserId,
+                };
+
+                await _publishEndpoint.Publish(notify);
 
                 return Ok();
             }
@@ -107,10 +145,46 @@ namespace SwishBackend.Orders.Controllers
             }
         }
 
+
+
+        [HttpGet("/current/{userName}")]
+        public async Task<IActionResult> GetCurrentUserCount(string userName)
+        {
+            var user = await _userClient
+                .GetResponse<UserLookupResponse>
+                (new UserLookupMessage { UserName = userName });
+
+            if (user.Message != null)
+            {
+                var userId = user.Message.UserId;
+
+                var orderCount = await _ordersDbContext
+                    .ShoppingCartOrders
+                    .Where(o => o.UserId == userId && !o.HasBeenCheckedOut)
+                    .FirstOrDefaultAsync();
+
+                var notify = new OrderNotify
+                {
+                    Count = orderCount.TotalCount,
+                    Email = orderCount.Email,
+                    UserId = orderCount.UserId,
+                };
+                await _publishEndpoint
+                    .Publish(notify);
+
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
         [HttpGet("/listItems/{userName}")]
         public async Task<IActionResult> GetAllItems(string userName)
         {
-            var user = await _userClient.GetResponse<UserLookupResponse>(new UserLookupMessage { UserName = userName });
+            var user = await _userClient
+                .GetResponse<UserLookupResponse>
+                (new UserLookupMessage { UserName = userName });
+
             if (user?.Message != null)
             {
                 var userId = user.Message.UserId;
@@ -123,14 +197,18 @@ namespace SwishBackend.Orders.Controllers
                     {
                         TotalAmount = o.TotalPrice,
                         TotalCount = o.TotalCount,
-                        ShoppingCartItems = o.ShoppingCartItems.Select(item => new
+                        ShoppingCartItems = o.ShoppingCartItems
+                        .Select(item => new
                         {
+                            Id = item.Id,
                             Name = item.Name,
                             Price = item.Price,
                             Quantity = item.OrderedQuantity,
                             Category = item.ProductCategoryId,
                             CategoryName = item.CategoryName,
-                          
+                            Stock = item.Stock,
+                            Image = item.Image,
+
                         })
                     }).FirstOrDefaultAsync();
 
@@ -143,36 +221,35 @@ namespace SwishBackend.Orders.Controllers
             return BadRequest();
         }
 
-        [HttpGet("{userName}/{productId}")]
-        public async Task<IActionResult> PostOrder(string userName, Guid productId, int quantity)
+        [HttpPost]
+        public async Task<IActionResult> PostOrder([FromBody] PostOrderRequestObject requestObject)
         {
             var user = await _userClient
-                .GetResponse<UserLookupResponse>(new UserLookupMessage { UserName = userName });
+                .GetResponse<UserLookupResponse>
+                (new UserLookupMessage { UserName = requestObject.userName });
 
             var product = await _productClient
-                .GetResponse<ProductResponseMessage>(new ProductLookupMessage { ProductId = productId });
+                .GetResponse<ProductResponseMessage>
+                (new ProductLookupMessage { ProductId = requestObject.productId});
 
             var counter = 0;
 
             if (product?.Message != null && user?.Message != null)
             {
                 var userId = user.Message.UserId;
-
-                var existingOrder = await _ordersDbContext.ShoppingCartOrders
-                    .Include(o => o.ShoppingCartItems)
-                    .Where(o => o.UserId == userId && !o.HasBeenCheckedOut)
-                    .FirstOrDefaultAsync();
+                var existingOrder = await GetExistingOrderAsync(userId);
 
                 if (existingOrder != null)
                 {
-                    var existingItem = existingOrder.ShoppingCartItems
-                        .FirstOrDefault(item => item.ProductCategoryId == productId);
+                    var existingItem = existingOrder
+                        .ShoppingCartItems
+                        .FirstOrDefault(item => item.ProductCategoryId ==  requestObject.productId);
 
                     if (existingItem != null)
                     {
-                        if (quantity < product.Message.Stock && quantity > 0)
+                        if (requestObject.quantity < product.Message.Stock && requestObject.quantity > 0)
                         {
-                            existingItem.OrderedQuantity += quantity;
+                            existingItem.OrderedQuantity += requestObject.quantity;
                         }
                         else
                         {
@@ -181,17 +258,9 @@ namespace SwishBackend.Orders.Controllers
                     }
                     else
                     {
-                        if (quantity < product.Message.Stock && quantity > 0)
+                        if (requestObject.quantity < product.Message.Stock && requestObject.quantity > 0)
                         {
-                            existingOrder.ShoppingCartItems.Add(new ShoppingCartItem
-                            {
-                                Name = product.Message.Name,
-                                CategoryName = product.Message.CategoryName,
-                                Price = product.Message.Price,
-                                Stock = product.Message.Stock,
-                                OrderedQuantity = quantity,
-                                ProductCategoryId = productId,
-                            });
+                            AddToExistingOrder(requestObject.productId, requestObject.quantity, product, existingOrder);
                         }
                         else
                         {
@@ -199,12 +268,8 @@ namespace SwishBackend.Orders.Controllers
                         }
                     }
 
-                    existingOrder.TotalPrice = existingOrder.ShoppingCartItems
-                        .Sum(item => item.OrderedQuantity * item.Price);
-
-
-                    existingOrder.TotalCount = existingOrder.ShoppingCartItems
-                           .Sum(item => item.OrderedQuantity);
+                    CalculateTotalPrice(existingOrder);
+                    CalculateTotalCount(existingOrder);
 
                     counter = existingOrder.TotalCount;
                     // Save changes to the database
@@ -213,33 +278,11 @@ namespace SwishBackend.Orders.Controllers
 
                 else
                 {
-                    if (quantity < product.Message.Stock && quantity > 0)
+                    if (requestObject.quantity < product.Message.Stock && requestObject.quantity > 0)
                     {
-                        var newOrder = new ShoppingCartOrder
-                        {
-                            UserId = userId,
-                            ShoppingCartItems = new List<ShoppingCartItem>
-                        {
-                            new ShoppingCartItem
-                            {
-                                Name = product.Message.Name,
-                                CategoryName = product.Message.CategoryName,
-                                Price = product.Message.Price,
-                                Stock = product.Message.Stock,
-                                OrderedQuantity = quantity,
-                                ProductCategoryId = productId,
-                            }
-                        },
-                            OrderTime = DateTime.UtcNow,
-                            Email = user.Message.UserName
-
-                        };
-
-                        newOrder.TotalPrice = newOrder.ShoppingCartItems
-                            .Sum(item => item.OrderedQuantity * item.Price);
-
-                        newOrder.TotalCount = newOrder.ShoppingCartItems
-                            .Sum(item => item.OrderedQuantity);
+                        ShoppingCartOrder newOrder = CreateNewOrder(requestObject.productId, requestObject.quantity, user, product, userId);
+                        CalculateTotalPrice(newOrder);
+                        CalculateTotalCount(newOrder);
 
                         counter = newOrder.TotalCount;
 
@@ -272,6 +315,66 @@ namespace SwishBackend.Orders.Controllers
                 return Ok(new { cartItem });
             }
             return BadRequest("Either User or order was incorrect");
+        }
+
+        private static void AddToExistingOrder(Guid productId, int quantity, Response<ProductResponseMessage> product, ShoppingCartOrder? existingOrder)
+        {
+            existingOrder.ShoppingCartItems.Add(new ShoppingCartItem
+            {
+                Name = product.Message.Name,
+                CategoryName = product.Message.CategoryName,
+                Image = product.Message.Image,
+                Price = product.Message.Price,
+                Stock = product.Message.Stock,
+                OrderedQuantity = quantity,
+                ProductCategoryId = productId,
+            });
+        }
+
+        private static ShoppingCartOrder CreateNewOrder(Guid productId, int quantity, Response<UserLookupResponse> user, Response<ProductResponseMessage> product, string userId)
+        {
+            return new ShoppingCartOrder
+            {
+                UserId = userId,
+                ShoppingCartItems = new List<ShoppingCartItem>
+                        {
+                            new ShoppingCartItem
+                            {
+                                Name = product.Message.Name,
+                                CategoryName = product.Message.CategoryName,
+                                Image = product.Message.Image,
+                                Price = product.Message.Price,
+                                Stock = product.Message.Stock,
+                                OrderedQuantity = quantity,
+                                ProductCategoryId = productId,
+                            }
+                        },
+                OrderTime = DateTime.UtcNow,
+                Email = user.Message.UserName
+            };
+        }
+
+        private async Task<ShoppingCartOrder?> GetExistingOrderAsync(string userId)
+        {
+            return await _ordersDbContext
+                .ShoppingCartOrders
+                .Include(o => o.ShoppingCartItems)
+                .Where(o => o.UserId == userId && !o.HasBeenCheckedOut)
+                .FirstOrDefaultAsync();
+        }
+
+        private static void CalculateTotalCount(ShoppingCartOrder? existingOrder)
+        {
+            existingOrder.TotalCount = existingOrder
+                                .ShoppingCartItems
+                                .Sum(item => item.OrderedQuantity);
+        }
+
+        private static void CalculateTotalPrice(ShoppingCartOrder? existingOrder)
+        {
+            existingOrder.TotalPrice = existingOrder
+                .ShoppingCartItems
+                .Sum(item => item.OrderedQuantity * item.Price);
         }
     }
 }

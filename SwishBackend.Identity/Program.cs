@@ -1,6 +1,7 @@
 using MassTransit;
 using MassTransitCommons.Common.Email;
 using MassTransitCommons.Common.Order;
+using SwishBackend.Identity;
 using SwishBackend.Identity.Consumers;
 using SwishBackend.Identity.Email.Register;
 using SwishBackend.Identity.Email.Token;
@@ -89,5 +90,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+SeedData.EnsureDataIsSeeded(app);
 app.Run();

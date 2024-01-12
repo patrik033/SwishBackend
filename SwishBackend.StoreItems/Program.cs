@@ -1,6 +1,7 @@
 using MassTransit;
 using MassTransitCommons.Common.Order;
 using SwishBackend.MassTransitCommons.Common;
+using SwishBackend.StoreItems;
 using SwishBackend.StoreItems.Consumers;
 using SwishBackend.StoreItems.Data.Query;
 using SwishBackend.StoreItems.Extensions;
@@ -29,6 +30,7 @@ builder.Services.AddMassTransit(x =>
 
     x.AddConsumer<ProductConsumer>()
    .Endpoint(e => e.Name = "productId");
+
     x.AddRequestClient<ProductLookupMessage>(new Uri("exchange:orderProducts"));
 
     x.UsingRabbitMq((context, cfg) =>
@@ -43,8 +45,11 @@ builder.Services.AddMassTransit(x =>
 });
 
 
-builder.Services.AddScoped<IPagedRepo, PagedRepo>();
-builder.Services.AddScoped<IProductsByCategory, ProductsByCategory>();
+builder.Services
+    .AddScoped<IPagedRepo, PagedRepo>();
+
+builder.Services
+    .AddScoped<IProductsByCategory, ProductsByCategory>();
 
 var app = builder.Build();
 
@@ -62,4 +67,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+SeedData.EnsureDataIsSeeded(app);
 app.Run();

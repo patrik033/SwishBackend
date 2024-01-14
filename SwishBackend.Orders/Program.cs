@@ -1,9 +1,14 @@
 using MassTransit;
 using MassTransitCommons.Common.Order;
 using Microsoft.EntityFrameworkCore;
+using Stripe.Checkout;
+using SwishBackend.MassTransitCommons.Common.Payment.CreateSession;
+using SwishBackend.MassTransitCommons.Common.Payment.GetSession;
+using SwishBackend.MassTransitCommons.Models;
 using SwishBackend.Orders;
 using SwishBackend.Orders.Data;
 using SwishBackend.Orders.Extensions;
+using SwishBackend.Orders.Models;
 using SwishBackend.Orders.Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +21,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IStripeService, StripeService>();
 await builder.Services.ConfigureAzure(builder.Configuration);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddCors(options =>
     {
@@ -38,14 +44,14 @@ builder.Services.AddDbContext<OrdersDbContext>(options =>
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumersFromNamespaceContaining<OrderNotify>();
-
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("order", false));
 
 
-
-
+    x.AddRequestClient<SessionStatusRequest>();
+    x.AddRequestClient<CreatePaymentSessionRequest>();
     x.AddRequestClient<UserLookupMessage>();
     x.AddRequestClient<ProductLookupMessage>();
+    x.AddRequestClient<ShoppingCartOrder>();
 
     x.UsingRabbitMq((context, cfg) =>
     {

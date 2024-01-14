@@ -56,6 +56,7 @@ builder.Services.AddMassTransit(x =>
 
     x.AddConsumer<UserConsumer>()
    .Endpoint(e => e.Name = "userName");
+
     x.AddRequestClient<UserLookupMessage>(new Uri("exchange:users"));
 
 

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Options;
 using Stripe;
 using Stripe.Checkout;
-using SwishBackend.Orders.Models;
-using SwishBackend.Orders.Models.Azure;
+using SwishBackend.Payments.Models;
+using SwishBackend.Payments.Models.Azure;
 
-namespace SwishBackend.Orders.Stripe
+namespace SwishBackend.Payments.Stripe
 {
     public class StripeService : IStripeService
     {

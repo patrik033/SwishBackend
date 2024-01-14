@@ -45,7 +45,7 @@ namespace SwishBackend.Orders.Controllers
 
             var item = existingOrder.ShoppingCartItems
                 .FirstOrDefault(x => x.ProductCategoryId == productId);
-            
+
             if (item != null)
             {
                 _ordersDbContext
@@ -163,16 +163,21 @@ namespace SwishBackend.Orders.Controllers
                     .Where(o => o.UserId == userId && !o.HasBeenCheckedOut)
                     .FirstOrDefaultAsync();
 
-                var notify = new OrderNotify
+                if (orderCount != null)
                 {
-                    Count = orderCount.TotalCount,
-                    Email = orderCount.Email,
-                    UserId = orderCount.UserId,
-                };
-                await _publishEndpoint
-                    .Publish(notify);
 
-                return Ok();
+                    var notify = new OrderNotify
+                    {
+                        Count = orderCount.TotalCount,
+                        Email = orderCount.Email,
+                        UserId = orderCount.UserId,
+                    };
+                    await _publishEndpoint
+                        .Publish(notify);
+
+                    return Ok();
+                }
+                return NotFound();
             }
 
             return BadRequest();
@@ -230,7 +235,7 @@ namespace SwishBackend.Orders.Controllers
 
             var product = await _productClient
                 .GetResponse<ProductResponseMessage>
-                (new ProductLookupMessage { ProductId = requestObject.productId});
+                (new ProductLookupMessage { ProductId = requestObject.productId });
 
             var counter = 0;
 
@@ -243,7 +248,7 @@ namespace SwishBackend.Orders.Controllers
                 {
                     var existingItem = existingOrder
                         .ShoppingCartItems
-                        .FirstOrDefault(item => item.ProductCategoryId ==  requestObject.productId);
+                        .FirstOrDefault(item => item.ProductCategoryId == requestObject.productId);
 
                     if (existingItem != null)
                     {

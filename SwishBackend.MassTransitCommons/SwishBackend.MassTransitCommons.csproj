@@ -11,4 +11,8 @@
     <Folder Include="Common\PaintingEntity\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Stripe.net" Version="43.10.0" />
+  </ItemGroup>
+
 </Project>

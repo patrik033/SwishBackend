@@ -21,10 +21,14 @@ The project consist of two project, first this as the backend then the frontend 
 ## Todo
 
 
-     
+ - Testing & error handling  &#x2610;
+   - Write tests for each project &#x2610;
+   - Implement global handling errors &#x2610;
+   - Implement logging for each project &#x2610;
  - Authentication &#x2610;
    - Add basic authentication &#x2611;
    - Change to http only cookie &#x2610;
+   - Extend users with address object &#x2610;
  - Basic Email &#x2610;
    - Add more endpoints except when user registers and request a new activation email &#x2610;
  - Setting up the Gateway &#x2610;

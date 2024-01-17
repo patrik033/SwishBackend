@@ -35,7 +35,7 @@ The project consist of two project, first this as the backend then the frontend 
    - Add DHL as carrier option(optional, might change)  &#x2610;
  - Payment Service &#x2610;
    - Basic interaction with stripes embedded form &#x2611;
-   - Add swish option as payment alternative payment method  &#x2610;
+   - Add swish option as alternative payment method  &#x2610;
 
 
 

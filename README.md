@@ -61,4 +61,12 @@ Make sure you are in the correct project when doing so. As of now only Identity,
 Either: run this command in the terminal to start rabbitMQ:  docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management
 Or: navigate to the docker-compose.yml file in terminal and write "docker compose up" to start rabbit mq while docker is running.
 
+## Checkout
 
+- For payment success: use card number 4242 4242 4242 4242
+- For cards with unnificient founds: use card number 4000 0000 0000 9995
+- For declined payment: use card number 4000 0000 0000 0002
+
+  For date use a valid future date as 12/34<br></br>
+  And csv code 3 digits such as 123 &nbsp; (4 digits for american express cards)
+  <br/><br/>For more information how to use stripe, please use:  &nbsp; [Stripe testing documentation](https://stripe.com/docs/testing?numbers-or-method-or-token=card-numbers#use-test-cards)

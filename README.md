@@ -20,16 +20,22 @@ The project consist of two project, first this as the backend then the frontend 
 
 ## Todo
 
- - Basic Authentication &#x2611;
+
+     
+ - Authentication &#x2610;
+   - Add basic authentication &#x2611;
    - Change to http only cookie &#x2610;
- - Basic Email &#x2611;
+ - Basic Email &#x2610;
    - Add more endpoints except when user registers and request a new activation email &#x2610;
  - Setting up the Gateway &#x2610;
  - Ordering Service &#x2610;
    - Added basic stripe interragation(~will be moved to payment API later~) &#x2611;  
  - Adding Carrier Options &#x2610;
- - Payment Service &#x2611;
-   - Basic interaction with stripes embedded form &#x2611; 
+   - Add postnord as carrier option &#x2610;
+   - Add DHL as carrier option(optional, might change)  &#x2610;
+ - Payment Service &#x2610;
+   - Basic interaction with stripes embedded form &#x2611;
+   - Add swish option as payment alternative payment method  &#x2610;
 
 
 

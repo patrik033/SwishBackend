@@ -10,5 +10,8 @@ namespace SwishBackend.MassTransitCommons.Common.Payment.CreateSession
     public class CreatePaymentSessionRequest
     {
         public ShoppingCartOrderMessage PaymentOrder { get; set; }
+        public string StreetAddress { get; set; }
+        public string City { get; set; }
+        public string ZipCode { get; set; }
     }
 }

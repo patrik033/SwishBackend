@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SwishBackend.Identity.Authentication;
 using SwishBackend.Identity.Data;
 using SwishBackend.Identity.Models;
@@ -14,7 +15,7 @@ namespace SwishBackend.Identity.Controllers
     public class Authentication : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
-
+        private readonly ApplicationDbContext _context;
         private readonly ILogger<Authentication> _logger;
         private readonly IUserRegistrationService _userRegistrationService;
         private readonly IUserLoginService _userLoginService;
@@ -31,9 +32,11 @@ namespace SwishBackend.Identity.Controllers
             IConfirmAccountService confirmAccountService,
             IUpdateAccount updateAccount,
             IResetService resetService,
-            IConfiguration configuration
+            IConfiguration configuration,
+            ApplicationDbContext context
             )
         {
+            _context = context;
             _userRegistrationService = userRegistrationService;
             _userLoginService = userLoginService;
             _confirmAccountService = confirmAccountService;
@@ -160,6 +163,57 @@ namespace SwishBackend.Identity.Controllers
             {
                 return Ok(user.Id);
             }
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("address/{userName}")]
+        public async Task<IActionResult> GetAddress(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user != null)
+            {
+                var address = await _context.Users
+                    .Where(x => x.Id == user.Id)
+                    .Include(x => x.Address) // Directly select the Address entity
+                    .Select(x => new
+                    {
+                        StreetAddress = x.Address.StreetAddress,
+                        City = x.Address.City,
+                        ZipCode = x.Address.ZipCode
+                    })
+                    .FirstOrDefaultAsync();
+
+                if (address != null)
+                    return Ok(address);
+
+                return NotFound();
+            }
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("addAddress")]
+        public async Task<IActionResult> AddAddress([FromBody] AddressRequest addressRequest)
+        {
+            var user = await _userManager.FindByNameAsync(addressRequest.UserId);
+
+            if (user != null)
+            {
+                user.Address = new Address
+                {
+                    StreetAddress = addressRequest.StreetAddress,
+                    City = addressRequest.City,
+                    ZipCode = addressRequest.ZipCode,
+                    UserId = user.Id
+                };
+
+                _context.Addresses.Add(user.Address);
+                await _context.SaveChangesAsync();
+
+                return Ok();
+            }
+
             return BadRequest();
         }
     }

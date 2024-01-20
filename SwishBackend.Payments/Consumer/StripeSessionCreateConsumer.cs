@@ -15,7 +15,7 @@ namespace SwishBackend.Payments.Consumer
         private readonly IStripeService _stripeService;
         private readonly AzureKeyVault _stripeKeyVaultKey;
 
-        public StripeSessionCreateConsumer(IStripeService stripeService, AzureKeyVault stripeKeyVaultKey,IMapper mapper)
+        public StripeSessionCreateConsumer(IStripeService stripeService, AzureKeyVault stripeKeyVaultKey, IMapper mapper)
         {
 
             _stripeService = stripeService;
@@ -35,10 +35,9 @@ namespace SwishBackend.Payments.Consumer
                 var domain = "http://localhost:5173";
                 var lineItems = new List<SessionLineItemOptions>();
 
-
+               
                 data.ShoppingCartItems.ForEach(item => lineItems.Add(new SessionLineItemOptions
                 {
-
                     PriceData = new SessionLineItemPriceDataOptions
                     {
                         UnitAmountDecimal = item.Price * 100,
@@ -46,22 +45,27 @@ namespace SwishBackend.Payments.Consumer
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
                             Name = item.Name,
-                            
                         }
                     },
                     Quantity = item.OrderedQuantity,
                 }));
-
+              
                 var options = new SessionCreateOptions
                 {
+
+                    BillingAddressCollection = "required",
                     CustomerEmail = data.Email,
                     UiMode = "embedded",
                     LineItems = lineItems,
+               
                     Mode = "payment",
                     InvoiceCreation = new SessionInvoiceCreationOptions
                     {
+                        
                         Enabled = true,
-                        InvoiceData = new SessionInvoiceCreationInvoiceDataOptions{
+                        InvoiceData = new SessionInvoiceCreationInvoiceDataOptions
+                        {
+                            
                             Description = $"Invoide for Product"
                         }
                     },
@@ -80,6 +84,8 @@ namespace SwishBackend.Payments.Consumer
                     Session = new Session
                     {
                         Id = session.Id,
+                        BillingAddressCollection = session.BillingAddressCollection,
+                        ShippingAddressCollection = session.ShippingAddressCollection,
                         InvoiceId = session.InvoiceId,
                         ClientSecret = session.ClientSecret,
                         CustomerEmail = session.CustomerEmail,

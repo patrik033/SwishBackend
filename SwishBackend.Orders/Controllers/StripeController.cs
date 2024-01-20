@@ -44,21 +44,24 @@ namespace SwishBackend.Orders.Controllers
 
         [HttpPost]
         [Route("{userName}")]
-        public async Task<IActionResult> CreateCheckoutSession(string userName)
+        public async Task<IActionResult> CreateCheckoutSession(string userName, [FromBody] AddressRequest addressDetails)
         {
-
+          
             var data = await _context.ShoppingCartOrders
                 .Include(x => x.ShoppingCartItems)
                 .FirstOrDefaultAsync(x => x.Email == userName && !x.HasBeenCheckedOut);
 
-            if (data != null)
+            if (data != null && addressDetails != null)
             {
                 try
                 {
                     var paymentOrder = _mapper.Map<ShoppingCartOrderMessage>(data);
                     var stripe = await _requestClient.GetResponse<CreatePaymentSessionResponse>(new CreatePaymentSessionRequest
                     {
-                        PaymentOrder = paymentOrder
+                        PaymentOrder = paymentOrder,
+                        City = addressDetails.City,
+                        StreetAddress = addressDetails.StreetAddress,
+                        ZipCode = addressDetails.ZipCode
                     });
 
                     return Ok(stripe.Message.Session);

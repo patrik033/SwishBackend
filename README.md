@@ -20,16 +20,29 @@ The project consist of two project, first this as the backend then the frontend 
 
 ## Todo
 
- - Basic Authentication &#x2611;
+
+ - Testing & error handling  &#x2610;
+   - Write tests for each project &#x2610;
+   - Implement global handling errors &#x2610;
+   - Implement logging for each project &#x2610;
+ - Authentication &#x2610;
+   - Add basic authentication &#x2611;
    - Change to http only cookie &#x2610;
- - Basic Email &#x2611;
+   - Extend users with address object &#x2610;
+ - Basic Email &#x2610;
    - Add more endpoints except when user registers and request a new activation email &#x2610;
  - Setting up the Gateway &#x2610;
  - Ordering Service &#x2610;
-   - Added basic stripe interragation(~will be moved to payment API later~) &#x2611;  
+   - Added basic stripe interragation(~will be moved to payment API later~) &#x2611;
+   - Option to send the order to swish endpoint in payment service  
  - Adding Carrier Options &#x2610;
- - Payment Service &#x2611;
-   - Basic interaction with stripes embedded form &#x2611; 
+   - Add postnord as carrier option &#x2610;
+   - Add DHL as carrier option(optional, might change)  &#x2610;
+ - Payment Service &#x2610;
+   - Basic interaction with stripes embedded form &#x2611;
+   - Add swish option as alternative payment method  &#x2610;
+     - Generate a qr code for swish & bankid &#x2610;
+     - Sign with bankid(test, not production) &#x2610;
 
 
 
@@ -61,4 +74,12 @@ Make sure you are in the correct project when doing so. As of now only Identity,
 Either: run this command in the terminal to start rabbitMQ:  docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management
 Or: navigate to the docker-compose.yml file in terminal and write "docker compose up" to start rabbit mq while docker is running.
 
+## Checkout
 
+- For payment success: use card number 4242 4242 4242 4242
+- For cards with unnificient founds: use card number 4000 0000 0000 9995
+- For declined payment: use card number 4000 0000 0000 0002
+
+  For date use a valid future date as 12/34<br></br>
+  And csv code 3 digits such as 123 &nbsp; (4 digits for american express cards)
+  <br/><br/>For more information how to use stripe, please use:  &nbsp; [Stripe testing documentation](https://stripe.com/docs/testing?numbers-or-method-or-token=card-numbers#use-test-cards)

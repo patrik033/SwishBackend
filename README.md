@@ -36,8 +36,8 @@ The project consist of two project, first this as the backend then the frontend 
    - Added basic stripe interragation(~will be moved to payment API later~) &#x2611;
    - Option to send the order to swish endpoint in payment service  
  - Adding Carrier Options &#x2610;
-   - Add postnord as carrier option &#x2610;
-   - Add DHL as carrier option(optional, might change)  &#x2610;
+   - Add postnord as carrier option &#x2611;
+   - Add DHL as carrier option(optional, might change)  &#x2611;
  - Payment Service &#x2610;
    - Basic interaction with stripes embedded form &#x2611;
    - Add swish option as alternative payment method  &#x2610;

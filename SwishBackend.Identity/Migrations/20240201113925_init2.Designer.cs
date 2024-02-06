@@ -12,8 +12,8 @@ using SwishBackend.Identity.Data;
 namespace SwishBackend.Identity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231216232907_seedIdentity")]
-    partial class seedIdentity
+    [Migration("20240201113925_init2")]
+    partial class init2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -184,6 +184,61 @@ namespace SwishBackend.Identity.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SwishBackend.Identity.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StreetNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Eskilstuna",
+                            StreetAddress = "Idungatan",
+                            StreetNumber = 0,
+                            UserId = "3a3e134a-2c3a-446f-86af-112d26fd2890",
+                            ZipCode = "63352"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Eskilstuna",
+                            StreetAddress = "Hödergatan",
+                            StreetNumber = 0,
+                            UserId = "9a3e139a-1c7a-446f-86af-112d26fd2899",
+                            ZipCode = "63352"
+                        });
+                });
+
             modelBuilder.Entity("SwishBackend.Identity.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -258,16 +313,16 @@ namespace SwishBackend.Identity.Migrations
                         {
                             Id = "3a3e134a-2c3a-446f-86af-112d26fd2890",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c697d29e-9145-4179-9925-43516cb70819",
+                            ConcurrencyStamp = "5dbb14a0-08e5-4ed0-8a4c-76a1c7c7b080",
                             Email = "admin.smiledentist@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Admin",
                             NormalizedEmail = "ADMIN.SMILEDENTIST@GMAIL.COM",
                             NormalizedUserName = "ADMIN.SMILEDENTIST@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELr4IKLjrOlomqeJ/YXVdj3TcI//MEDD8oqbbNZ6yEBmgxc/XqVVRjUpoVutxVbvHg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBFQEFMQswQ2qI1UehFeAQVf19FseUDTp29UeNAu0BtHQWNyc0tMknOa7HgxkjTiqw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "924fe6e8-ce10-4220-a74f-370072504954",
+                            SecurityStamp = "cd568269-bd00-47ce-86a0-438a861ee355",
                             TwoFactorEnabled = false,
                             UserName = "admin.smiledentist@gmail.com"
                         },
@@ -275,19 +330,54 @@ namespace SwishBackend.Identity.Migrations
                         {
                             Id = "9a3e139a-1c7a-446f-86af-112d26fd2899",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b1789403-e368-4ded-b5dd-89cdd30c5d6d",
+                            ConcurrencyStamp = "050bae80-04aa-4e46-9457-f340c99e903c",
                             Email = "customer.smiledentist@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Erik",
                             NormalizedEmail = "CUSTOMER.SMILEDENTIST@GMAIL.COM",
                             NormalizedUserName = "CUSTOMER.SMILEDENTIST@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDbjBmbeoxBF0JG6NXH1/nPj7EC688avyID3lT5aguRunxXAb+Gz3NbRMCUgacGq6g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI3MGze+aJcAJ1CmTBouh7iJdqW6E2bFipc08TqnVfb5XoUKLcaVZivzm6yhVdCLlg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4ab48bf3-3836-45c6-86b4-b9569ddb7c25",
+                            SecurityStamp = "586be524-e463-49c8-bf7f-5302ff422e14",
                             TwoFactorEnabled = false,
                             UserName = "customer.smiledentist@gmail.com"
                         });
+                });
+
+            modelBuilder.Entity("SwishBackend.Identity.Models.BillingAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StreetNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("BillingAddress");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -339,6 +429,35 @@ namespace SwishBackend.Identity.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SwishBackend.Identity.Models.Address", b =>
+                {
+                    b.HasOne("SwishBackend.Identity.Models.ApplicationUser", "User")
+                        .WithOne("Address")
+                        .HasForeignKey("SwishBackend.Identity.Models.Address", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SwishBackend.Identity.Models.BillingAddress", b =>
+                {
+                    b.HasOne("SwishBackend.Identity.Models.ApplicationUser", "User")
+                        .WithOne("BillingAddress")
+                        .HasForeignKey("SwishBackend.Identity.Models.BillingAddress", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SwishBackend.Identity.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Address");
+
+                    b.Navigation("BillingAddress");
                 });
 #pragma warning restore 612, 618
         }

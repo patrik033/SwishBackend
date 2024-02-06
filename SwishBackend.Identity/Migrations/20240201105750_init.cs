@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SwishBackend.Identity.Migrations
 {
     /// <inheritdoc />
-    public partial class seedIdentity : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -70,6 +70,28 @@ namespace SwishBackend.Identity.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StreetAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -159,6 +181,28 @@ namespace SwishBackend.Identity.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BillingAddress",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StreetAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BillingAddress", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BillingAddress_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -173,8 +217,17 @@ namespace SwishBackend.Identity.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "3a3e134a-2c3a-446f-86af-112d26fd2890", 0, "c697d29e-9145-4179-9925-43516cb70819", "admin.smiledentist@gmail.com", true, false, null, "Admin", "ADMIN.SMILEDENTIST@GMAIL.COM", "ADMIN.SMILEDENTIST@GMAIL.COM", "AQAAAAIAAYagAAAAELr4IKLjrOlomqeJ/YXVdj3TcI//MEDD8oqbbNZ6yEBmgxc/XqVVRjUpoVutxVbvHg==", null, false, "924fe6e8-ce10-4220-a74f-370072504954", false, "admin.smiledentist@gmail.com" },
-                    { "9a3e139a-1c7a-446f-86af-112d26fd2899", 0, "b1789403-e368-4ded-b5dd-89cdd30c5d6d", "customer.smiledentist@gmail.com", true, false, null, "Erik", "CUSTOMER.SMILEDENTIST@GMAIL.COM", "CUSTOMER.SMILEDENTIST@GMAIL.COM", "AQAAAAIAAYagAAAAEDbjBmbeoxBF0JG6NXH1/nPj7EC688avyID3lT5aguRunxXAb+Gz3NbRMCUgacGq6g==", null, false, "4ab48bf3-3836-45c6-86b4-b9569ddb7c25", false, "customer.smiledentist@gmail.com" }
+                    { "3a3e134a-2c3a-446f-86af-112d26fd2890", 0, "d6fdbe10-bf74-44b1-9857-519dd9f470f7", "admin.smiledentist@gmail.com", true, false, null, "Admin", "ADMIN.SMILEDENTIST@GMAIL.COM", "ADMIN.SMILEDENTIST@GMAIL.COM", "AQAAAAIAAYagAAAAEGxpY9j+izAnrNrUIlxsIz0IVYKi+hSG2H2D+Sye5Xqd22gaE5w7GIwouLE1JEiBSw==", null, false, "643b7195-90c7-496c-b8b6-d62f224186e2", false, "admin.smiledentist@gmail.com" },
+                    { "9a3e139a-1c7a-446f-86af-112d26fd2899", 0, "595ec6d3-a350-4efc-8c97-a8b4bc9a16b2", "customer.smiledentist@gmail.com", true, false, null, "Erik", "CUSTOMER.SMILEDENTIST@GMAIL.COM", "CUSTOMER.SMILEDENTIST@GMAIL.COM", "AQAAAAIAAYagAAAAEEwwf2RlHiGkd5G0wzWtc3IATi0TPsu2NVxkihWQx5pWxVVbbX/7xbbE/3UaLBx9+w==", null, false, "88206eb3-3b8a-4276-ab1d-bd4a336680a2", false, "customer.smiledentist@gmail.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Addresses",
+                columns: new[] { "Id", "City", "StreetAddress", "UserId", "ZipCode" },
+                values: new object[,]
+                {
+                    { 1, "Eskilstuna", "Idungatan", "3a3e134a-2c3a-446f-86af-112d26fd2890", "63352" },
+                    { 2, "Eskilstuna", "Hödergatan", "9a3e139a-1c7a-446f-86af-112d26fd2899", "63352" }
                 });
 
             migrationBuilder.InsertData(
@@ -185,6 +238,12 @@ namespace SwishBackend.Identity.Migrations
                     { "3b570ab7-3b6f-4a2c-8b51-e4270cdf2d57", "3a3e134a-2c3a-446f-86af-112d26fd2890" },
                     { "45bf2ad4-7c42-46b0-8c66-55138bd38142", "9a3e139a-1c7a-446f-86af-112d26fd2899" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_UserId",
+                table: "Addresses",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -224,11 +283,20 @@ namespace SwishBackend.Identity.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BillingAddress_UserId",
+                table: "BillingAddress",
+                column: "UserId",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Addresses");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -243,6 +311,9 @@ namespace SwishBackend.Identity.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "BillingAddress");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -175,13 +175,13 @@ namespace SwishBackend.Identity.Controllers
             {
                 var address = await _context.Users
                     .Where(x => x.Id == user.Id)
-                    .Include(x => x.Address) // Directly select the Address entity
-                    .Select(x => new
-                    {
-                        StreetAddress = x.Address.StreetAddress,
-                        City = x.Address.City,
-                        ZipCode = x.Address.ZipCode
-                    })
+             //       .Include(x => x.Address) // Directly select the Address entity
+                    //.Select(x => new
+                    //{
+                    //    StreetAddress = x.Address.StreetAddress,
+                    //    City = x.Address.City,
+                    //    ZipCode = x.Address.ZipCode
+                    //})
                     .FirstOrDefaultAsync();
 
                 if (address != null)
@@ -200,15 +200,15 @@ namespace SwishBackend.Identity.Controllers
 
             if (user != null)
             {
-                user.Address = new Address
-                {
-                    StreetAddress = addressRequest.StreetAddress,
-                    City = addressRequest.City,
-                    ZipCode = addressRequest.ZipCode,
-                    UserId = user.Id
-                };
+                //user.Address = new Address
+                //{
+                //    StreetAddress = addressRequest.StreetAddress,
+                //    City = addressRequest.City,
+                //    ZipCode = addressRequest.ZipCode,
+                //    UserId = user.Id
+                //};
 
-                _context.Addresses.Add(user.Address);
+                //_context.Addresses.Add(user.Address);
                 await _context.SaveChangesAsync();
 
                 return Ok();

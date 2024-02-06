@@ -28,7 +28,7 @@ The project consist of two project, first this as the backend then the frontend 
  - Authentication &#x2610;
    - Add basic authentication &#x2611;
    - Change to http only cookie &#x2610;
-   - Extend users with address object &#x2610;
+   - Extend users with address object &#x2611;
  - Basic Email &#x2610;
    - Add more endpoints except when user registers and request a new activation email &#x2610;
  - Setting up the Gateway &#x2610;

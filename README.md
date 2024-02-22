@@ -34,15 +34,16 @@ The project consist of two project, first this as the backend then the frontend 
  - Setting up the Gateway &#x2610;
  - Ordering Service &#x2610;
    - Added basic stripe interragation(~will be moved to payment API later~) &#x2611;
-   - Option to send the order to swish endpoint in payment service  
- - Adding Carrier Options &#x2610;
+   - Option to send the order to swish endpoint in payment service &#x2611;
+ - Adding Carrier Options &#x2611;
    - Add postnord as carrier option &#x2611;
    - Add DHL as carrier option(optional, might change)  &#x2611;
  - Payment Service &#x2610;
    - Basic interaction with stripes embedded form &#x2611;
-   - Add swish option as alternative payment method  &#x2610;
-     - Generate a qr code for swish & bankid &#x2610;
-     - Sign with bankid(test, not production) &#x2610;
+   - Add swish option as alternative payment method  &#x2611;
+     - Generate a qr code for swish & bankid &#x2611;
+     - Sign with bankid(test, not production) &#x2611;
+   - Handle swish integration for payment   &#x2610;
 
 
 

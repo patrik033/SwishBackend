@@ -7,7 +7,6 @@ namespace SwishBackend.Carriers.Data
     public class CarriersDbContext : DbContext
     {
 
-        //TODO: fixa relationen för DHL
 
         //public DbSet<DHLNearestServicePoint>    DHLNearestServicePoints { get; set; }
         public DbSet<PostNordNearestServicePoint> PostNordNearestServicePoints { get; set; }

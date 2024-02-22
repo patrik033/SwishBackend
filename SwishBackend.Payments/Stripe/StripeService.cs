@@ -24,13 +24,16 @@ namespace SwishBackend.Payments.Stripe
 
             order.ShoppingCartItems.ForEach(item => lineItems.Add(new SessionLineItemOptions
             {
-
+                
+                
                 PriceData = new SessionLineItemPriceDataOptions
                 {
+                     
                     UnitAmountDecimal = item.Price * 100,
                     Currency = "sek",
                     ProductData = new SessionLineItemPriceDataProductDataOptions
                     {
+                         
                         Name = item.Name,
                     }
                 },
@@ -39,6 +42,8 @@ namespace SwishBackend.Payments.Stripe
 
             var options = new SessionCreateOptions
             {
+                
+                 
                 //ShippingAddressCollection = new SessionShippingAddressCollectionOptions
                 //{
                 //    AllowedCountries = new List<string>
@@ -47,12 +52,15 @@ namespace SwishBackend.Payments.Stripe
                 //    },
                 //},
 
+                
+
 
                 //PaymentMethodTypes = new List<string>
                 //{
                 //    "card",
                 //},
                 //BillingAddressCollection = "required",
+                
                 CustomerEmail = order.Email,
                 UiMode = "embedded",
                 LineItems = lineItems,

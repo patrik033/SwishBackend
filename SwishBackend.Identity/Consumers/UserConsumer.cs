@@ -26,7 +26,7 @@ namespace SwishBackend.Identity.Consumers
                     await context.RespondAsync<UserLookupResponse>(new UserLookupResponse
                     {
                         UserName = user.UserName,
-                        UserId = user.Id
+                        UserId = user.Id,
                     });
                 }
                 else

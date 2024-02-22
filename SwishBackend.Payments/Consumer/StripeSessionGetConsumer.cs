@@ -24,6 +24,8 @@ namespace SwishBackend.Payments.Consumer
         {
             try
             {
+
+                
                 var sessionService = new SessionService();
                 Session session = sessionService.Get(context.Message.SessionId);
 
@@ -36,7 +38,13 @@ namespace SwishBackend.Payments.Consumer
                         InvoiceId = session.InvoiceId,
                         ClientSecret = session.ClientSecret,
                         CustomerEmail = session.CustomerEmail,
-                        AmountTotal = session.AmountTotal
+                        AmountTotal = session.AmountTotal,
+                        CustomerDetails = session.CustomerDetails,
+                        ShippingDetails = session.ShippingDetails,
+                        BillingAddressCollection = session.BillingAddressCollection,
+                        ShippingOptions = session.ShippingOptions,
+                        TotalDetails = session.TotalDetails,
+                        LineItems = session.LineItems,
                     }
                 });
             }

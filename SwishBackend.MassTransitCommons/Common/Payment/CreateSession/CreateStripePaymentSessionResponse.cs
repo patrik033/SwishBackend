@@ -2,7 +2,7 @@
 
 namespace SwishBackend.MassTransitCommons.Common.Payment.CreateSession
 {
-    public class CreatePaymentSessionResponse
+    public class CreateStripePaymentSessionResponse
     {
         public Session Session { get; set; }
     }

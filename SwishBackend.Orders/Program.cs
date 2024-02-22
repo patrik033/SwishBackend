@@ -1,7 +1,9 @@
 using MassTransit;
+using MassTransitCommons.Common.Email;
 using MassTransitCommons.Common.Order;
 using Microsoft.EntityFrameworkCore;
 using Stripe.Checkout;
+using SwishBackend.MassTransitCommons.Common.Email;
 using SwishBackend.MassTransitCommons.Common.Payment.CreateSession;
 using SwishBackend.MassTransitCommons.Common.Payment.GetSession;
 using SwishBackend.MassTransitCommons.Models;
@@ -44,11 +46,12 @@ builder.Services.AddDbContext<OrdersDbContext>(options =>
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumersFromNamespaceContaining<OrderNotify>();
+    x.AddConsumersFromNamespaceContaining<EmailPaymentSuccessMessage>();
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("order", false));
 
-
+    x.AddRequestClient<CreateSwishPaymentRequest>();
     x.AddRequestClient<SessionStatusRequest>();
-    x.AddRequestClient<CreatePaymentSessionRequest>();
+    x.AddRequestClient<CreateStripePaymentSessionRequest>();
     x.AddRequestClient<UserLookupMessage>();
     x.AddRequestClient<ProductLookupMessage>();
     x.AddRequestClient<ShoppingCartOrder>();

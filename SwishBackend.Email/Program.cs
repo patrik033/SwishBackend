@@ -2,6 +2,7 @@ using SwishBackend.Email.Extensions;
 using MassTransit;
 using SwishBackend.Email.Models.MessageBus;
 using SwishBackend.Email.Email;
+using SwishBackend.MassTransitCommons.Common.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,12 +15,14 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddSingleton<ISendGridEmailRegisterService, SendGridEmailRegisterService>();
+builder.Services.AddSingleton<ISendGridEmailPaymentSuccess, SendGridEmailPaymentSuccess>();
 //retrieve the keyvault key
 await builder.Services.ConfigureAzure(builder.Configuration);
 
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumersFromNamespaceContaining<EmailRegistrationSuccessfullConsumer>();
+    x.AddConsumersFromNamespaceContaining<EmailPaymentSuccessConsumer>();
 
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -29,6 +32,12 @@ builder.Services.AddMassTransit(x =>
             e.UseMessageRetry(r => r.Interval(5, 5));
             e.ConfigureConsumer<EmailRegistrationSuccessfullConsumer>(context);
             // ep.Durable = true;
+        });
+
+        cfg.ReceiveEndpoint("emailPaymentQueue", e =>
+        {
+            e.UseMessageRetry(r => r.Interval(5, 5));
+            e.ConfigureConsumer<EmailPaymentSuccessConsumer>(context);
         });
     });
 });

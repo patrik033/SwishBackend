@@ -175,13 +175,14 @@ namespace SwishBackend.Identity.Controllers
             {
                 var address = await _context.Users
                     .Where(x => x.Id == user.Id)
-             //       .Include(x => x.Address) // Directly select the Address entity
-                    //.Select(x => new
-                    //{
-                    //    StreetAddress = x.Address.StreetAddress,
-                    //    City = x.Address.City,
-                    //    ZipCode = x.Address.ZipCode
-                    //})
+                    .Include(x => x.Address) // Directly select the Address entity
+                    .Select(x => new
+                    {
+                        StreetNumber = x.Address.StreetNumber,
+                        StreetAddress = x.Address.StreetAddress,
+                        City = x.Address.City,
+                        ZipCode = x.Address.ZipCode
+                    })
                     .FirstOrDefaultAsync();
 
                 if (address != null)

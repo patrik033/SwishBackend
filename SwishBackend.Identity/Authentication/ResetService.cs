@@ -69,7 +69,7 @@ namespace SwishBackend.Identity.Authentication
 
 
 
-                //TODO: change to RabbitMQ and map to object
+
                 await _sendGridEmailTokens.SendAsync(emailSettings, emailSettings, "Reset Password link", token, user.Name);
                 ResponseResult(HttpStatusCode.OK, true, "Password reset was successfull", "");
                 return _response;

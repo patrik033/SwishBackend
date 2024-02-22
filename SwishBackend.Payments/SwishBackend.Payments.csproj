@@ -9,6 +9,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+		<PackageReference Include="Ngrok.AspNetCore" Version="1.0.6" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 		<PackageReference Include="Stripe.net" Version="43.10.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
@@ -22,6 +23,15 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\SwishBackend.MassTransitCommons\SwishBackend.MassTransitCommons.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Certificates\Sandbox.p12">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Certificates\Swish_Merchant_TestCertificate_1234679304.p12">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>

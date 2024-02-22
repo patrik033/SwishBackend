@@ -4,6 +4,8 @@ using SwishBackend.Payments.Consumer;
 using SwishBackend.Payments.Extensions;
 using SwishBackend.MassTransitCommons.Common.Payment.CreateSession;
 using SwishBackend.MassTransitCommons.Common.Payment.GetSession;
+using NgrokAspNetCore;
+using SwishBackend.MassTransitCommons.Common.Payment.Swish;
 //using SwishBackend.MassTransitCommons.Common.Payment.;
 
 
@@ -39,12 +41,16 @@ builder.Services.AddMassTransit(x =>
 
     x.AddConsumer<StripeSessionCreateConsumer>()
    .Endpoint( e => e.Name = "paymentOrder");
+
+    x.AddConsumer<SwishCreateConsumer>()
+    .Endpoint(e => e.Name = "paymentSwish");
+
     x.AddConsumer<StripeSessionGetConsumer>()
     .Endpoint(e => e.Name = "paymentGetOrder");
 
-    x.AddRequestClient<CreatePaymentSessionResponse>(new Uri("exchange:payments"));
+    x.AddRequestClient<CreateStripePaymentSessionResponse>(new Uri("exchange:payments"));
     x.AddRequestClient<SessionStatusResponse>(new Uri("exchange:payments"));
-
+    x.AddRequestClient<CreateSwishPaymentResponse>(new Uri("exchange:payments"));
 
     x.UsingRabbitMq((context, cfg) =>
     {

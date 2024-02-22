@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using MassTransit;
+using MassTransitCommons.Common.Order;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Stripe;
 using Stripe.Checkout;
-
 using SwishBackend.MassTransitCommons.Common.Payment.CreateSession;
 using SwishBackend.MassTransitCommons.Common.Payment.GetSession;
 using SwishBackend.MassTransitCommons.Models;
@@ -23,15 +23,17 @@ namespace SwishBackend.Orders.Controllers
         private readonly OrdersDbContext _context;
         private readonly IStripeService _stripeService;
         private readonly IMapper _mapper;
-        private readonly IRequestClient<CreatePaymentSessionRequest> _requestClient;
+        private readonly IRequestClient<CreateStripePaymentSessionRequest> _requestClient;
         private readonly IRequestClient<SessionStatusRequest> _getStripeSessionClient;
+        private readonly IRequestClient<UserLookupMessage> _userClient;
 
         public StripeController(
             OrdersDbContext context,
             IStripeService stripeService,
             IMapper mapper,
-            IRequestClient<CreatePaymentSessionRequest> requestClient,
-            IRequestClient<SessionStatusRequest> getStripeSessionClient
+            IRequestClient<CreateStripePaymentSessionRequest> requestClient,
+            IRequestClient<SessionStatusRequest> getStripeSessionClient,
+            IRequestClient<UserLookupMessage> userClient
             )
         {
             _context = context;
@@ -39,14 +41,17 @@ namespace SwishBackend.Orders.Controllers
             _mapper = mapper;
             _requestClient = requestClient;
             _getStripeSessionClient = getStripeSessionClient;
+            _userClient = userClient;
         }
+
 
 
         [HttpPost]
         [Route("{userName}")]
         public async Task<IActionResult> CreateCheckoutSession(string userName, [FromBody] AddressRequest addressDetails)
         {
-          
+
+
             var data = await _context.ShoppingCartOrders
                 .Include(x => x.ShoppingCartItems)
                 .FirstOrDefaultAsync(x => x.Email == userName && !x.HasBeenCheckedOut);
@@ -56,12 +61,14 @@ namespace SwishBackend.Orders.Controllers
                 try
                 {
                     var paymentOrder = _mapper.Map<ShoppingCartOrderMessage>(data);
-                    var stripe = await _requestClient.GetResponse<CreatePaymentSessionResponse>(new CreatePaymentSessionRequest
+                    var stripe = await _requestClient.GetResponse<CreateStripePaymentSessionResponse>(new CreateStripePaymentSessionRequest
                     {
                         PaymentOrder = paymentOrder,
                         City = addressDetails.City,
                         StreetAddress = addressDetails.StreetAddress,
-                        ZipCode = addressDetails.ZipCode
+                        StreetNumber = addressDetails.StreetNumber,
+                        ZipCode = addressDetails.ZipCode,
+                        
                     });
 
                     return Ok(stripe.Message.Session);
@@ -74,8 +81,6 @@ namespace SwishBackend.Orders.Controllers
                 }
             }
             return BadRequest("No order exists for this user");
-
-
         }
 
         [HttpGet]
@@ -90,12 +95,13 @@ namespace SwishBackend.Orders.Controllers
                     SessionId = session_id
                 });
 
+
                 if (getStripe.Message.SessionResponse != null)
                 {
-                    //TODO skicka mailbekräftelse vid lyckad betalning
+
                     var data = await _context.ShoppingCartOrders
                         .Include(x => x.ShoppingCartItems)
-                        .FirstOrDefaultAsync(x => x.Email == getStripe.Message.SessionResponse.CustomerEmail && !x.HasBeenCheckedOut);
+                        .FirstOrDefaultAsync(x => x.Email == getStripe.Message.SessionResponse.CustomerDetails.Email && !x.HasBeenCheckedOut);
 
                     data.HasBeenCheckedOut = true;
                     _context.SaveChanges();

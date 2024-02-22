@@ -63,6 +63,8 @@ namespace SwishBackend.Identity.Authentication
                     var userRole = GetUserRole(registerRequestDTO.Role);
                     await _userManager.AddToRoleAsync(newUser, userRole);
 
+
+
                     var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
                     var urlToken = Base64UrlEncoder.Encode(emailToken);
                     var token = $"http://localhost:5173/RegisterConfirmation?email={newUser.Email}&activationToken={urlToken}";

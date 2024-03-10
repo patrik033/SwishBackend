@@ -97,4 +97,4 @@ Or: navigate to the docker-compose.yml file in terminal and write "docker compos
   And csv code 3 digits such as 123 &nbsp; (4 digits for american express cards)
   <br/><br/>For more information how to use stripe, please use:  &nbsp; [Stripe testing documentation](https://stripe.com/docs/testing?numbers-or-method-or-token=card-numbers#use-test-cards)
 
-    [Go to beginning](#general-info)
+    [Go to beginning](#swishbackend)

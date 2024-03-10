@@ -47,7 +47,7 @@ The project consist of two project, first this as the backend then the frontend 
      - ~Sign with bankid(test, not production)~ &#x2611;
    - Handle swish integration for payment   &#x2610;
   
-  [Go to beginning](#general-info)
+     [Go to beginning](#swishbackend)
 
 ## Finished
 
@@ -58,7 +58,7 @@ The project consist of two project, first this as the backend then the frontend 
   - Add postnord as carrier option &#x2611;
   - Add DHL as carrier option(~optional, might change~)  &#x2611;
 
-  [Go to beginning](#general-info)
+    [Go to beginning](#swishbackend)
 ## Setup
 #### Sql Server:
 

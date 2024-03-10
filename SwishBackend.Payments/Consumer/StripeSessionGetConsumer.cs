@@ -24,11 +24,8 @@ namespace SwishBackend.Payments.Consumer
         {
             try
             {
-
-                
                 var sessionService = new SessionService();
                 Session session = sessionService.Get(context.Message.SessionId);
-
                 await context.RespondAsync<SessionStatusResponse>(new SessionStatusResponse
                 {
                     SessionResponse = new Session

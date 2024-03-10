@@ -39,6 +39,7 @@ namespace SwishBackend.Payments.Consumer
                     PriceData = new SessionLineItemPriceDataOptions
                     {
                         UnitAmountDecimal = item.Price * 100,
+                       // UnitAmount = (long)item.Price,
                         Currency = "sek",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
@@ -91,8 +92,13 @@ namespace SwishBackend.Payments.Consumer
                         Enabled = true,
                     },
 
+                    PaymentMethodTypes = new List<string>
+                    {
+                        "card",
+                        "swish"
+                    },
 
-                   ShippingAddressCollection = new SessionShippingAddressCollectionOptions
+                    ShippingAddressCollection = new SessionShippingAddressCollectionOptions
                    {
                        AllowedCountries = new List<string>
                        {

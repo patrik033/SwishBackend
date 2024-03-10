@@ -59,6 +59,13 @@ namespace SwishBackend.Orders.Controllers
                             EmailCustomerAboutSuccessfullPayment(stripeSesson, line);
                         }
                         break;
+
+                
+
+                    case Events.PaymentIntentSucceeded:
+                        stripeSesson = stripeEvent.Data.Object as Session;
+                        break;
+
                 }
                 return Ok();
             }
@@ -83,7 +90,7 @@ namespace SwishBackend.Orders.Controllers
                 var amountTotal = session?.AmountTotal;
                 var email = session.CustomerEmail;
                 var customerData = session.CustomerDetails.Address;
-                var shippingAddress = session.Customer.Shipping.Address;
+                var shippingAddress = session.CustomerDetails.Address;
 
 
                 var emailObject = new EmailPaymentSuccessMessage

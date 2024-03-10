@@ -23,15 +23,13 @@ RUN dotnet restore
 
 # copy the rest of the application and publish
 COPY . .
-WORKDIR /app/SwishBackend.Email
+WORKDIR /app/SwishBackend.Payments
 RUN dotnet publish -c Release -o /app/out
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 
-
-
 ENV ASPNETCORE_ENVIRONMENT=Development
 WORKDIR /app
 COPY --from=build /app/out .
-ENTRYPOINT ["dotnet", "SwishBackend.Email.dll"]
+ENTRYPOINT ["dotnet", "SwishBackend.Payments.dll"]

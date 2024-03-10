@@ -8,6 +8,8 @@
 ## Table Of Contents
 * [General Info](#general-info)
 * [Setup](#setup)
+* [Todo](#todo)
+* [Finished](#finished)
 
 
 ## General Info
@@ -26,25 +28,32 @@ The project consist of two project, first this as the backend then the frontend 
    - Implement global handling errors &#x2610;
    - Implement logging for each project &#x2610;
  - Authentication &#x2610;
-   - Add basic authentication &#x2611;
    - Change to http only cookie &#x2610;
-   - Extend users with address object &#x2611;
+  
  - Basic Email &#x2610;
    - Add more endpoints except when user registers and request a new activation email &#x2610;
  - Setting up the Gateway &#x2610;
  - Ordering Service &#x2610;
    - Added basic stripe interragation(~will be moved to payment API later~) &#x2611;
-   - Option to send the order to swish endpoint in payment service &#x2611;
- - Adding Carrier Options &#x2611;
-   - Add postnord as carrier option &#x2611;
-   - Add DHL as carrier option(optional, might change)  &#x2611;
+   - ~Option to send the order to swish endpoint in payment service~ &#x2611;
+   - Options for both card(fake) and Swish payments are added(not for production) &#x2611;
+   - Options for refunds &#x2610;
+ 
  - Payment Service &#x2610;
    - Basic interaction with stripes embedded form &#x2611;
-   - Add swish option as alternative payment method  &#x2611;
-     - Generate a qr code for swish & bankid &#x2611;
-     - Sign with bankid(test, not production) &#x2611;
+   - Moved to Stripe integration ~Add swish option as alternative payment method~  &#x2611;
+     - ~Generate a qr code for swish & bankid~ &#x2611;
+     - ~Sign with bankid(test, not production)~ &#x2611;
    - Handle swish integration for payment   &#x2610;
 
+## Finished
+
+- Authentication
+  - Add basic authentication &#x2611;
+  - Extend users with address object &#x2611;
+- Adding Carrier Options &#x2611;
+  - Add postnord as carrier option &#x2611;
+  - Add DHL as carrier option(~optional, might change~)  &#x2611;
 
 
 ## Setup

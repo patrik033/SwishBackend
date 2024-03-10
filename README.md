@@ -11,10 +11,10 @@
 
 
 ## General Info
-This Project is my implementation of an e-commerce platform built with C#/.NET as backend with a microservice perspective taken in mind. 
-It's not something that in it's current state is ready for production, but is more my learning platform for setting up a microservice application.
-The project will include Authentication,Email service for receiving registration confirm, order confirmation etc, signalR for live data updates.
-For payment both Stripe and swedish Swish system will be introduced, though no reall money will be involved for the payments.
+This project is meant to be more a learning platform for me and maybe an example how you can implement Swish and Stripe in your backend.
+It's not meant for production, although how we use it's close to production.
+The project will include Authentication,services for Email,Ordereding,SignalR for live data updated,Payment and a gateway.
+No reall money, we are just using test environments.
 
 The project consist of two project, first this as the backend then the frontend part. See [Frontend](https://github.com/patrik033/SwishFront)
 

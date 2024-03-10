@@ -20,7 +20,8 @@ No reall money, we are just using test environments.
 
 The project consist of two project, first this as the backend then the frontend part. See [Frontend](https://github.com/patrik033/SwishFront)
 
-## Todo
+## Todo  
+
 
 
  - Testing & error handling  &#x2610;
@@ -45,6 +46,8 @@ The project consist of two project, first this as the backend then the frontend 
      - ~Generate a qr code for swish & bankid~ &#x2611;
      - ~Sign with bankid(test, not production)~ &#x2611;
    - Handle swish integration for payment   &#x2610;
+  
+  [Go to beginning](#general-info)
 
 ## Finished
 
@@ -55,7 +58,7 @@ The project consist of two project, first this as the backend then the frontend 
   - Add postnord as carrier option &#x2611;
   - Add DHL as carrier option(~optional, might change~)  &#x2611;
 
-
+  [Go to beginning](#general-info)
 ## Setup
 #### Sql Server:
 
@@ -93,3 +96,5 @@ Or: navigate to the docker-compose.yml file in terminal and write "docker compos
   For date use a valid future date as 12/34<br></br>
   And csv code 3 digits such as 123 &nbsp; (4 digits for american express cards)
   <br/><br/>For more information how to use stripe, please use:  &nbsp; [Stripe testing documentation](https://stripe.com/docs/testing?numbers-or-method-or-token=card-numbers#use-test-cards)
+
+    [Go to beginning](#general-info)
